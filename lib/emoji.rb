@@ -56,6 +56,18 @@ module Emoji
 
     safe_string
   end
+  
+  def self.replace_unicode_moji_with_nothing(string)
+    return string unless string
+    unless string.match(index.unicode_moji_regex)
+      return safe_string(string)
+    end
+
+    safe_string = safe_string(string.dup)
+    safe_string.gsub!(index.unicode_moji_regex, '')
+
+    safe_string
+  end
 
   def self.safe_string(string)
     if string.respond_to?(:html_safe?) && string.html_safe?
